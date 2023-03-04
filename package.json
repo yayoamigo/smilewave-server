@@ -1,0 +1,25 @@
+{
+  "name": "smilewave-client-server",
+  "version": "1.0.0",
+  "description": "Complete full stack social media app",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd API && npm install && cd ..",
+    "deploy": "npm start --prefix API ",
+    "deploy-cluster": " npm run cluster --prefix API",
+    "API": "npm run watch --prefix API",
+    "client": "npm start --prefix client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yayoamigo/smilewave-client-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yayoamigo/smilewave-client-server/issues"
+  },
+  "homepage": "https://github.com/yayoamigo/smilewave-client-server#readme"
+}

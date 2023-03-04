@@ -1,0 +1,34 @@
+{
+  "name": "smilewave",
+  "version": "1.0.0",
+  "description": "Introducing SmileWave, a new social network that's all about spreading positivity and connecting people from all walks of life! Say goodbye to negativity and hello to endless opportunities for friendship, support, and inspiration. Join me in building a brighter future with SmileWave.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yayoamigo/smilewave.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yayoamigo/smilewave/issues"
+  },
+  "homepage": "https://github.com/yayoamigo/smilewave#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "mongoose": "^6.9.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "socket.io": "^4.6.1",
+    "timeago.js": "^4.0.2"
+  }
+}
