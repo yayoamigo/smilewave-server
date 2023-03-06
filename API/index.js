@@ -1,7 +1,7 @@
 // Import necessary libraries
 const express = require("express"); // Framework to create a REST API
 const app = express(); // Create an instance of the express application
-const http = require("http"); // Library for creating an HTTP server
+const https = require('https');
 const mongoose = require("mongoose"); // Library for connecting to MongoDB
 const helmet = require("helmet"); // Library for setting HTTP headers to improve security
 const morgan = require("morgan"); // Library for logging HTTP requests
@@ -14,6 +14,8 @@ const multer = require("multer"); // Library for handling file uploads
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const io = require('socket.io');
+const cors = require("cors");
+const fs = require('fs');
 
 // Load environment variables from a .env file
 dotenv.config();
@@ -26,9 +28,18 @@ mongoose.connect(
     console.log("connected to Mongo")
     }
     );
+
+
+const options = {
+   key:  fs.readFileSync('../key.pem'),
+   cert:  fs.readFileSync('../cer.pm')
+};
+
+
     
     // Create an HTTP server using the express app
-    const server = http.createServer(app);
+const server = https.createServer(options, app);
+    
     
     const socketServer = io(server);
   
@@ -37,6 +48,13 @@ mongoose.connect(
     app.use(express.json());
     app.use(morgan("common"));
     
+    const corsOptions = {
+        origin: '*',
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type"],
+        crossOriginResourcePolicy: { policy: "same-site" }
+      };
+      app.use(cors(corsOptions));
     // Set up middleware to set HTTP headers for improved security
     app.use(
     helmet({
@@ -44,7 +62,6 @@ mongoose.connect(
     directives: {
     ...helmet.contentSecurityPolicy.getDefaultDirectives(),
     "img-src": ["'self'", "data:", "blob:"],
-    "connect-src": ["'self'", "http://localhost:8900", "ws://localhost:8900"],
     },
     },
     })
@@ -81,7 +98,15 @@ mongoose.connect(
     
     
   
-    app.use('/images', express.static(path.join(__dirname, 'images/assets')));
+  app.use('/images', express.static(path.join(__dirname, 'images/assets'), { 
+  setHeaders: function (res, path, stat) {
+    if (path.endsWith('.jpg') || path.endsWith('.jpeg')) {
+      res.set('Content-Type', 'image/jpeg');
+    } else if (path.endsWith('.png')) {
+      res.set('Content-Type', 'image/png');
+    }
+  }
+}));
     
   
 
